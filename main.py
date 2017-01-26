@@ -3,9 +3,16 @@ from tinydb import TinyDB, Query
 import urllib2
 import twitter
 import config
+import logging
 from apscheduler.schedulers.blocking import BlockingScheduler
 
 sched = BlockingScheduler()
+log = logging.getLogger('apscheduler.executors.default')
+log.setLevel(logging.INFO)  # DEBUG
+fmt = logging.Formatter('%(levelname)s:%(name)s:%(message)s')
+h = logging.StreamHandler()
+h.setFormatter(fmt)
+log.addHandler(h)
 
 
 @sched.scheduled_job('interval', minutes=15)  # increasing this may have twitter rate-limit you
